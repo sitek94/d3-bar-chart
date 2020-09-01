@@ -18,7 +18,7 @@ const url =
 const rootPadding = 50;
 
 // Svg dimensions
-const width = 1200;
+const width = 900;
 const height = window.innerHeight - rootPadding;
 
 // Root
@@ -49,7 +49,7 @@ const render = (sourceData) => {
   const xMax = max(data, xValue);
 
   // Margins
-  const margin = { top: 50, right: 20, bottom: 20, left: 100 };
+  const margin = { top: 90, right: 20, bottom: 80, left: 100 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   
@@ -57,19 +57,24 @@ const render = (sourceData) => {
 
   // x scale
   const xScale = scaleTime()
-  .domain([xMin, xMax])
-  .range([0, innerWidth]);
+    .domain([xMin, xMax])
+    .range([0, innerWidth]);
 
   // x axis
   const xAxis = axisBottom(xScale);
 
-  // x scale
+  // y scale
   const yScale = scaleLinear()
     .domain([0, max(data, yValue)])
-    .range([innerHeight, 0]);
+    .range([innerHeight, 0])
+    .nice();
+
+  const yAxisTickFormat = number =>
+    format('.2s')(number).replace('k', 'B');
 
   // y axis
   const yAxis = axisLeft(yScale)
+    .tickFormat(yAxisTickFormat)
     .tickSize(-innerWidth)
 
   // Create group element inside svg
@@ -77,13 +82,18 @@ const render = (sourceData) => {
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-  // Title 
+    
+  // Title
   g.append('text')
     .attr('id', 'title')
-    .attr('text-anchor', 'middle')
-    .attr('x', innerWidth / 2)
-    .attr('y', -10)
-    .text('Gross Domestic Product (GDP)');
+    .attr('y', -60)
+    .text('Gross Domestic Product in United States');
+
+  // Subtitle
+  g.append('text')
+    .attr('id', 'sub-title')
+    .attr('y', -30)
+    .text('1947-01-01 - 2015-07-01');
 
   // Create y axis g element
   const yAxisG = g.append('g').call(yAxis)
@@ -137,6 +147,13 @@ const render = (sourceData) => {
       // Event handlers
       .on('mouseover', handleMouseover)
       .on('mouseout', handleMouseout);
+
+    // Append source
+    g.append('text')
+      .attr('id', 'source-label')
+      .attr('transform', `translate(0,${innerHeight + 60})`)
+      .text('Source: http://www.bea.gov/national/pdf/nipaguid.pdf');
+
 };
 
 // Make http request using json method from d3
