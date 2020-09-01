@@ -41,6 +41,7 @@ const render = (sourceData) => {
 
   const dateStrings = sourceData.data.map(d => d[0]);
   
+  // Parse date to show quarter of the year
   const parseDate = string => {
     const date = string.split('-');
     const year = date[0];
@@ -142,8 +143,6 @@ const render = (sourceData) => {
       .duration(200)		
       .style("opacity", .9);
 
-    
-
     tooltip.html(`$${yValue(d)} Billions <br> ${parseDate(dateStrings[i])}`)
       .attr('data-date', dateStrings[i])
       .attr('data-gdp', data[i].value)
@@ -179,12 +178,10 @@ const render = (sourceData) => {
       .attr('id', 'source-label')
       .attr('transform', `translate(0,${innerHeight + 60})`)
       .text('Source: http://www.bea.gov/national/pdf/nipaguid.pdf');
-
 };
 
 // Make http request using json method from d3
 json(url).then((sourceData) => {
   
-
   render(sourceData);
 });
