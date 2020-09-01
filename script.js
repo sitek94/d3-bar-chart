@@ -40,6 +40,20 @@ const render = (sourceData) => {
   }));
 
   const dateStrings = sourceData.data.map(d => d[0]);
+  
+  const parseDate = string => {
+    const date = string.split('-');
+    const year = date[0];
+    const month = +date[1];
+    const quarter = month === 1
+      ? "Q1"
+      : month === 4
+      ? "Q2"
+      : month === 7
+      ? "Q3"
+      : "Q4";
+    return `${year} ${quarter}`;
+  }
 
   // Value accessors
   const xValue = (d) => d.date;
@@ -48,8 +62,10 @@ const render = (sourceData) => {
   const xMin = min(data, xValue);
   const xMax = max(data, xValue);
 
-  // Margins
+  // Margins 
   const margin = { top: 90, right: 20, bottom: 80, left: 100 };
+
+  // Inner dimensions
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
   
@@ -74,7 +90,7 @@ const render = (sourceData) => {
 
   // y axis
   const yAxis = axisLeft(yScale)
-    .tickFormat(yAxisTickFormat)
+    //.tickFormat(yAxisTickFormat)
     .tickSize(-innerWidth)
 
   // Create group element inside svg
@@ -82,27 +98,35 @@ const render = (sourceData) => {
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    
   // Title
   g.append('text')
     .attr('id', 'title')
     .attr('y', -60)
     .text('Gross Domestic Product in United States');
 
-  // Subtitle
+  // Sub title
   g.append('text')
     .attr('id', 'sub-title')
     .attr('y', -30)
     .text('1947-01-01 - 2015-07-01');
 
-  // Create y axis g element
+  // y axis
   const yAxisG = g.append('g').call(yAxis)
-    .attr('id', 'y-axis')
+    .attr('id', 'y-axis');
+
+  // y axis label
+  yAxisG.append('text')
+    .attr('id', 'y-axis-label')
+    .attr('text-anchor', 'middle')
+    .attr('x', -innerHeight / 2)
+    .attr('y', -50)
+    .attr('transform', 'rotate(-90)')
+    .text('GDP in Billions of Dollars');
     
   // Remove domain line
   yAxisG.select('.domain').remove();
 
-  // Create x axis g element
+  // Append x axis
   g.append('g').call(xAxis)
     .attr('transform', `translate(0,${innerHeight})`)
     .attr('id', 'x-axis');
@@ -118,9 +142,11 @@ const render = (sourceData) => {
       .duration(200)		
       .style("opacity", .9);
 
-    tooltip.html('TEST TOOLTIP')
+    
+
+    tooltip.html(`$${yValue(d)} Billions <br> ${parseDate(dateStrings[i])}`)
       .attr('data-date', dateStrings[i])
-      .attr('data-gdp', yValue(d))
+      .attr('data-gdp', data[i].value)
       .style("left", (d3.event.pageX) + "px")		
       .style("top", (d3.event.pageY - 28) + "px");	
   }

@@ -39,21 +39,33 @@ text {
   fill: #8E8883;
 }
 
+#y-axis-label {
+  font-size: 1.6em;
+}
+
 #source-label {
   font-size: 1.1em;
 }
 
 #tooltip {
   position: absolute;
-  text-align: center;			
-  width: 60px;					
-  height: 28px;					
-  padding: 2px;				
-  font: 12px sans-serif;		
-  background: lightsteelblue;	
-  border: 0px;		
-  border-radius: 8px;			
-  pointer-events: none;		
+  width: 150px;
+  height: 60px;
+  padding: 5px 0;
+  border-radius: 6px;
+  color: #fff;
+  background-color: rgba(0,0,0, .5);
+  text-align: center;
+ 
+  pointer-events: none;
+  transform: translate(-100px, -60px);
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+  justify-content: center;
+
 }
 
 .bar {
@@ -63,5 +75,7 @@ text {
 .bar:hover {
   fill: white;
 }
+
+
 
 
