@@ -6,6 +6,7 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #F5F3F2;
 }
 
 text {
@@ -19,12 +20,10 @@ text {
 
 #root {
   height: 100vh;
-  
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background-color: #F5F3F2;
 }
 
 #title {
@@ -40,7 +39,7 @@ text {
 }
 
 #y-axis-label {
-  font-size: 1.6em;
+  font-size: 1.8em;
 }
 
 #source-label {

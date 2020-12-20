@@ -19,13 +19,14 @@ const rootPadding = 50;
 
 // Svg dimensions
 const width = 900;
-const height = window.innerHeight - rootPadding;
+const height = 600;
 
 // Root
 const root = select('#root');
 
 // Svg
 const svg = root.append('svg')
+  .attr('viewBox', `0 0 ${width} ${height}`)
   .attr('width', width)
   .attr('height', height);
 
@@ -91,7 +92,7 @@ const render = (sourceData) => {
 
   // y axis
   const yAxis = axisLeft(yScale)
-    //.tickFormat(yAxisTickFormat)
+    .tickFormat(yAxisTickFormat)
     .tickSize(-innerWidth)
 
   // Create group element inside svg
