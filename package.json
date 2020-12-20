@@ -1,0 +1,19 @@
+{
+  "name": "d3-bar-chart",
+  "version": "1.0.0",
+  "description": "See the project live here: https://sitek94.github.io/d3-bar-chart/",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitek94/d3-bar-chart.git"
+  },
+  "author": "Maciek Sitkowski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sitek94/d3-bar-chart/issues"
+  },
+  "homepage": "https://github.com/sitek94/d3-bar-chart#readme"
+}
